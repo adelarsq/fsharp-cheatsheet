@@ -4,8 +4,6 @@ An updated cheatsheet for F#
 
 This cheatsheet glances over some of the common syntax of [F#](http://research.microsoft.com/en-us/um/cambridge/projects/fsharp/manual/spec.html).
 
-Based on [dungpa/fsharp-cheatsheet](https://github.com/dungpa/fsharp-cheatsheet) and [artag/fsharp-cheatsheet](https://github.com/artag/fsharp-cheatsheet) cheatsheets.
-
 Contents
 --------
 [Comments](#Comments)  
@@ -28,6 +26,8 @@ Contents
 [Grouping functions](#GroupingFunctions)
 
 [Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)
+
+[Acknowledgments](#Acknowledgments)
 
 -------------------
 
@@ -93,11 +93,12 @@ printfn $"Name: %s{name}, Age: %d{age}" // typed
 Most numeric types have associated suffixes, e.g., `uy` for unsigned 8-bit integers and `L` for signed 64-bit integer.
 
 ```fsharp
-let b, i, l = 86uy, 86, 86L
+let b, i, l, ul = 86uy, 86, 86L, 86UL
 
-// [fsi:val b : byte = 86uy]
-// [fsi:val i : int = 86]
-// [fsi:val l : int64 = 86L]
+// val ul: uint64 = 86UL
+// val l: int64 = 86L
+// val i: int = 86
+// val b: byte = 86uy
 ```
 
 Other common examples are `F` or `f` for 32-bit floating-point numbers, `M` or `m` for decimals, and `I` for big integers.
@@ -1288,4 +1289,14 @@ only the reference is copied, not the underlying object.
     firstArray.[1].Insert(0, "Test2") |> ignore
     // firstArray: [|Test1; Test2; |]
     // secondArray: [|; Test2; |]
+
+
+<a name="Acknowledgments"></a>Acknowledgments
+--------
+
+Thanks goes to these people/projects:
+
+- [dungpa/fsharp-cheatsheet](https://github.com/dungpa/fsharp-cheatsheet)
+- [artag/fsharp-cheatsheet](https://github.com/artag/fsharp-cheatsheet)
+- [thriuin/fsharp-cheatsheet](https://github.com/thriuin/fsharp-cheatsheet)
 
