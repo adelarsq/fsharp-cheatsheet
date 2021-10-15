@@ -22,8 +22,11 @@ Contents
 [Interfaces and Object Expressions](#InterfacesAndObjectExpressions)  
 [Active Patterns](#ActivePatterns)  
 [Compiler Directives](#CompilerDirectives)
+
 [Mapping functions](#MappingFunctions)
+
 [Grouping functions](#GroupingFunctions)
+
 [Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)
 
 -------------------
