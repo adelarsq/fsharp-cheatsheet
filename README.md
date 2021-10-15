@@ -1,4 +1,4 @@
-# F# Cheatsheet
+# F# Cheatsheet 🔷
 
 An updated cheatsheet for F#
 
@@ -69,6 +69,16 @@ let poem =
      By a colorist of modest skill\n\
      A master limned you in the finest inks\n\
      And with a fresh-cut quill."
+```
+
+[Interpolated strings](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/interpolated-strings) let you write code in "holes" inside of a string literal (F# 5):
+
+```fsharp
+let name = "Phillip"
+let age = 30
+printfn $"Name: {name}, Age: {age}"
+let str = $"A pair of braces: {{}}"
+printfn $"Name: %s{name}, Age: %d{age}" // typed
 ```
 
 <a name="BasicTypesAndLiterals"></a>Basic Types and Literals
@@ -562,5 +572,3 @@ let path = __SOURCE_DIRECTORY__ + "../lib"
 let path = "../../../lib"
 #endif
 ```
-
-
