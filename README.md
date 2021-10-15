@@ -6,8 +6,6 @@ This cheatsheet glances over some of the common syntax of [F#](http://research.m
 
 Based on [dungpa/fsharp-cheatsheet](https://github.com/dungpa/fsharp-cheatsheet) and [artag/fsharp-cheatsheet](https://github.com/artag/fsharp-cheatsheet) cheatsheets.
 
-If you have any comments, corrections, or suggested additions, please open an issue or send a pull request to [https://github.com/dungpa/fsharp-cheatsheet](https://github.com/dungpa/fsharp-cheatsheet).
-
 Contents
 --------
 [Comments](#Comments)  
