@@ -292,7 +292,7 @@ let first = array1.[0]
 let first = array1[0]  
 ```
       
-### Sequences
+### Sequences == IEnumerable in BCL
 A *sequence* is a logical series of elements of the same type. Individual sequence elements are computed only as required, so a sequence can provide better performance than a list in situations in which not all the elements are used.
 
 ```fsharp
@@ -307,6 +307,89 @@ seq {
       yield! [5..10]
 }
 ```
+
+### Mutable Dictionaries (from BCL)
+
+As in C#:
+
+    open System.Collections.Generic
+
+    let inventory = Dictionary<string, float>()
+    inventory.Add("Apples", 0.33)
+    inventory.Remove "Oranges"
+    // Read the value. If not exists - throw exception.
+    let bananas = inventory.["Apples"]
+
+Additional F# syntax:
+
+    // Generic type inference with Dictionary
+    let inventory = Dictionary<_,_>()   // or let inventory = Dictionary()
+    inventory.Add("Apples", 0.33)
+
+### dict == IDictionary in BCL
+
+*dict* creates immutable dictionaries. Can’t add and remove items to it.
+
+    open System.Collections.Generic
+    let inventory : IDictionary<string, float> =
+        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
+        |> dict
+    let bananas = inventory.["Bananas"]     // 0.45
+    inventory.Add("Pineapples", 0.85)       // System.NotSupportedException
+    inventory.Remove("Bananas")             // System.NotSupportedException
+
+Quickly creating full dictionaries:
+
+    [ "Apples", 10; "Bananas", 20; "Grapes", 15 ] |> dict |> Dictionary
+
+### Map
+
+*Map* is an immutable key/value lookup. Allows safely add or remove items.
+
+    let inventory =
+        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
+        |> Map.ofList
+    let apples = inventory.["Apples"]
+    let pineapples = inventory.["Pineapples"]   // KeyNotFoundException
+    let newInventory =              // Creates new Map
+        inventory
+        |> Map.add "Pineapples" 0.87
+        |> Map.remove "Apples"
+
+Safely access a key in a *Map* by using *TryFind*. It returns a wrapped option:
+
+    let inventory =
+        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
+        |> Map.ofList
+
+    inventory.TryFind "Apples"      // option = Some 0.33
+    inventory.TryFind "Unknown"     // option = None
+
+Useful Map functions:
+
+* map
+* filter
+* iter
+* partition
+
+    let cheapFruit, expensiveFruit =
+        inventory
+        |> Map.partition(fun fruit cost -> cost < 0.3)
+
+### Dictionaries, dict, or Map?
+
+* Use *Map* as your default lookup type:
+    * It’s immutable
+    * Has good support for F# tuples and pipelining.
+
+* Use the *dict* function
+    * Quickly generate an *IDictionary* to interop with BCL code.
+    * To create a full Dictionary.
+
+* Use *Dictionary*:
+    * If need a mutable dictionary.
+    * Need specific performance requirements. (Example: tight loop performing
+    thousands of additions or removals).
 
 ### Higher-order functions on collections
 The same list `[ 1; 3; 5; 7; 9 ]` or array `[| 1; 3; 5; 7; 9 |]` can be generated in various ways.
