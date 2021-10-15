@@ -25,6 +25,7 @@ Contents
 [Mapping functions](#MappingFunctions)
 [Grouping functions](#GroupingFunctions)
 [Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)
+
 -------------------
 
 <a name="Comments"></a>Comments
