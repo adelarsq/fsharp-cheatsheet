@@ -2,7 +2,7 @@
 
 An updated cheatsheet for F#
 
-This cheatsheet glances over some of the common syntax of [F#](http://research.microsoft.com/en-us/um/cambridge/projects/fsharp/manual/spec.html).
+This cheatsheet glances over some of the common syntax of [F#](https://fsharp.org/).
 
 Contents
 --------
@@ -29,14 +29,15 @@ Contents
 
 <a name="Comments"></a>Comments
 --------
-Block comments are placed between `(*` and `*)`. Line comments start from `//` and continue until the end of the line.
+
+Line comments start from `//` and continue until the end of the line. Block comments are placed between `(*` and `*)`.
 
 ```fsharp
-(* This is block comment *)
 // And this is line comment
+(* This is block comment *)
 ```
 
-XML doc comments come after `///` allowing us to use XML tags to generate documentation.    
+[XML doc comments](https://docs.microsoft.com/dotnet/fsharp/language-reference/xml-documentation) come after `///` allowing us to use XML tags to generate documentation.    
     
 ```fsharp
 /// The `let` keyword defines an (immutable) value
@@ -45,7 +46,8 @@ let result = 1 + 1 = 2
 
 <a name="Strings"></a>Strings
 -------
-F# `string` type is an alias for `System.String` type.
+
+The F# `string` type is an alias for `System.String` type. See [Strings](See [Strings](https://docs.microsoft.com/dotnet/fsharp/language-reference/strings).
 
 ```fsharp
 /// Create a string using string concatenation
@@ -74,18 +76,20 @@ let poem =
      And with a fresh-cut quill."
 ```
 
-[Interpolated strings](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/interpolated-strings) let you write code in "holes" inside of a string literal (F# 5):
+[Interpolated strings](https://docs.microsoft.com/dotnet/fsharp/language-reference/interpolated-strings) let you write code in "holes" inside of a string literal:
 
 ```fsharp
 let name = "Phillip"
 let age = 30
 printfn $"Name: {name}, Age: {age}"
+
 let str = $"A pair of braces: {{}}"
 printfn $"Name: %s{name}, Age: %d{age}" // typed
 ```
 
 <a name="BasicTypesAndLiterals"></a>Basic Types and Literals
 ------------------------
+
 Most numeric types have associated suffixes, e.g., `uy` for unsigned 8-bit integers and `L` for signed 64-bit integer.
 
 ```fsharp
@@ -99,29 +103,66 @@ let b, i, l, ul = 86uy, 86, 86L, 86UL
 
 Other common examples are `F` or `f` for 32-bit floating-point numbers, `M` or `m` for decimals, and `I` for big integers.
 
-
 ```fsharp
 let s, f, d, bi = 4.14F, 4.14, 0.7833M, 9999I
 
-// [fsi:val s : float32 = 4.14f]
-// [fsi:val f : float = 4.14]
-// [fsi:val d : decimal = 0.7833M]
-// [fsi:val bi : System.Numerics.BigInteger = 9999]
+// [val s: float32 = 4.14f]
+// [val f: float = 4.14]
+// [val d: decimal = 0.7833M]
+// [val bi: System.Numerics.BigInteger = 9999]
 ```
 
-See [Literals (MSDN)](http://msdn.microsoft.com/en-us/library/dd233193.aspx) for complete reference.
+See [Literals](https://docs.microsoft.com/dotnet/fsharp/language-reference/literals) for complete reference.
+
+<a name="BasicTypesAndLiterals"></a>Printing Things
+------------------------
+
+Print things to console with `printfn`:
+
+```fsharp
+printfn "Hello, World"
+
+printfn $"The time is {System.DateTime.Now}"
+```
+
+You can also use `Console.WriteLine`:
+```fsharp
+open System
+
+Console.WriteLine $"The time is {System.DateTime.Now}"
+```
+
+Constrain types with `%d`, `%s`, and print structured values with `%A`:
+
+```fsharp
+let data = [1..10]
+
+printfn $"The numbers %d{1} to %d{10} are %A{data}"
+```
+
+Omit holes and apply arguments:
+
+```fsharp
+printfn "The numbers %d to %d are %A" 1 10 data
+```
+
+See [Plaintext Formatting](https://docs.microsoft.com/dotnet/fsharp/language-reference/plaintext-formatting)
 
 <a name="Loops"></a>Loops
 ---------
 
 ### for...in
 
+[For loops](https://docs.microsoft.com/dotnet/fsharp/language-reference/loops-for-in-expression):
+
 ```fsharp
-let list1 = [ 1; 5; 100; 450; 788 ]
+let list1 = [1; 5; 100; 450; 788]
+
 for i in list1 do
     printf "%d" i           // 1 5 100 450 788
 
 let seq1 = seq { for i in 1 .. 10 -> (i, i * i) }
+
 for (a, asqr) in seq1 do
     // 1 squared is 1
     // ...
@@ -136,7 +177,7 @@ for i = 10 downto 1 do
     printf "%i " i          // 10 9 8 7 6 5 4 3 2 1
 
 for i in 1 .. 2 .. 10 do
- printf "%d " i             // 1 3 5 7 9
+    printf "%d " i             // 1 3 5 7 9
 
 for c in 'a' .. 'z' do
     printf "%c " c          // a b c ... z
@@ -144,38 +185,48 @@ for c in 'a' .. 'z' do
 // Using of a wildcard character (_)
 // when the element is not needed in the loop.
 let mutable count = 0
+
 for _ in list1 do
     count <- count + 1
 ```
 
 ### while...do
 
+[While loops](https://docs.microsoft.com/dotnet/fsharp/language-reference/loops-while-do-expression):
+
 ```fsharp
 let mutable mutVal = 0
 while mutVal < 10 do        // while (not) test-expression do
     mutVal <- mutVal + 1
-done
 ```
 
 <a name="Functions"></a>Functions
 ---------
 
-The `let` keyword also defines named functions.
+The [`let`](https://docs.microsoft.com/dotnet/fsharp/language-reference/functions/let-bindings) keyword also defines named functions.
 
 ```fsharp
 let negate x = x * -1 
 let square x = x * x 
-let print x = printfn "The number is: %d" x
+let print x = printfn $"The number is: %d{x}"
 
 let squareNegateThenPrint x = 
     print (negate (square x)) 
 ```
 
-### Pipe and composition operators
-Pipe operator `|>` is used to chain functions and arguments together. Double-backtick identifiers are handy to improve readability especially in unit testing:
+Double-backtick identifiers are handy to improve readability especially in unit testing:
 
 ```fsharp
 let ``square, negate, then print`` x = 
+    print (negate (square x)) 
+```
+
+### Pipe operator
+
+The pipe operator `|>` is used to chain functions and arguments together:
+
+```fsharp
+let squareNegateThenPrint x = 
     x |> square |> negate |> print
 ```
 
@@ -188,37 +239,19 @@ let sumOfLengths (xs : string []) =
     |> Array.sum
 ```
 
-Composition operator `>>` is used to compose functions:
+### Composition operator
+
+The composition operator `>>` is used to compose functions:
 
 ```fsharp
-let squareNegateThenPrint' = 
+let squareNegateThenPrint = 
     square >> negate >> print
 ```
   
-### Recursive functions
-The `rec` keyword is used together with the `let` keyword to define a recursive function:
-
-```fsharp
-let rec fact x =
-    if x < 1 then 1
-    else x * fact (x - 1)
-```
-
-*Mutually recursive* functions (those functions which call each other) are indicated by `and` keyword:
-
-```fsharp
-let rec even x =
-   if x = 0 then true 
-   else odd (x - 1)
-
-and odd x =
-   if x = 0 then false
-   else even (x - 1)
-```
-
 <a name="PatternMatching"></a>Pattern Matching
 ----------------
-Pattern matching is often facilitated through `match` keyword.
+
+Pattern matching is primarily through `match` keyword;
 
 ```fsharp
 let rec fib n =
@@ -228,11 +261,11 @@ let rec fib n =
     | _ -> fib (n - 1) + fib (n - 2)
 ```
 
-In order to match sophisticated inputs, one can use `when` to create filters or guards on patterns:
+Use `when` to create filters or guards on patterns:
 
 ```fsharp
 let sign x = 
-  match x with
+    match x with
     | 0 -> 0
     | x when x < 0 -> -1
     | x -> 1
@@ -241,32 +274,35 @@ let sign x =
 Pattern matching can be done directly on arguments:
 
 ```fsharp
-let fst' (x, _) = x
+let fst (x, _) = x
 ```
 
 or implicitly via `function` keyword:
 
 ```fsharp
 /// Similar to `fib`; using `function` for pattern matching
-let rec fib' = function
+let rec fib2 = function
     | 0 -> 0
     | 1 -> 1
-    | n -> fib' (n - 1) + fib' (n - 2)
+    | n -> fib2 (n - 1) + fib2 (n - 2)
 ```
 
-For more complete reference visit [Pattern Matching (MSDN)](http://msdn.microsoft.com/en-us/library/dd547125.aspx).
+See [Pattern Matching](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/pattern-matching).
 
 <a name="Collections"></a>Collections
 -----------
 
 ### Lists
-A *list* is an immutable collection of elements of the same type.
+
+[*Lists*](https://docs.microsoft.com/dotnet/fsharp/language-reference/lists) are immutable collection of elements of the same type.
 
 ```fsharp
 // Lists use square brackets and `;` delimiter
-let list1 = [ "a"; "b" ]
+let list1 = ["a"; "b"]
+
 // :: is prepending
 let list2 = "c" :: list1
+
 // @ is concat    
 let list3 = list1 @ list2   
 
@@ -278,100 +314,130 @@ let rec sum list =
 ```
 
 ### Arrays
-*Arrays* are fixed-size, zero-based, mutable collections of consecutive data elements.
+
+[*Arrays*](https://docs.microsoft.com/dotnet/fsharp/language-reference/arrays) are fixed-size, zero-based, mutable collections of consecutive data elements.
 
 ```fsharp
 // Arrays use square brackets with bar
 let array1 = [| "a"; "b" |]
+
 // Indexed access using dot
-let first = array1.[0]  
-// Indexed access on F# 6
-let first = array1[0]  
+let first1 = array1.[0]   
+let first2 = array1[0]    // F# 6
 ```
       
-### Sequences == IEnumerable in BCL
+### Sequences == IEnumerable
+
 A *sequence* is a logical series of elements of the same type. Individual sequence elements are computed only as required, so a sequence can provide better performance than a list in situations in which not all the elements are used.
 
 ```fsharp
 // Sequences can use yield and contain subsequences
-let seq1 = 
 seq {
-      // "yield" adds one element
-      yield 1
-  yield 2
+    // "yield" adds one element
+    yield 1
+    yield 2
 
-      // "yield!" adds a whole subsequence
-      yield! [5..10]
+    // "yield!" adds a whole subsequence
+    yield! [5..10]
+}
+```
+
+The `yield` can normally be omitted:
+
+```fsharp
+// Sequences can use yield and contain subsequences
+seq {
+    1
+    2
+    yield! [5..10]
 }
 ```
 
 ### Mutable Dictionaries (from BCL)
 
-As in C#:
+Create a dictionary, add two entries, remove an entry, lookup an entry
 
-    open System.Collections.Generic
+```fsharp
+open System.Collections.Generic
 
-    let inventory = Dictionary<string, float>()
-    inventory.Add("Apples", 0.33)
-    inventory.Remove "Oranges"
-    // Read the value. If not exists - throw exception.
-    let bananas = inventory.["Apples"]
+let inventory = Dictionary<string, float>()
+
+inventory.Add("Apples", 0.33)
+inventory.Add("Oranges", 0.5)
+
+inventory.Remove "Oranges"
+
+// Read the value. If not exists - throw exception.
+let bananas1 = inventory.["Apples"]
+let bananas2 = inventory["Apples"]   // F# 6
+```
 
 Additional F# syntax:
 
-    // Generic type inference with Dictionary
-    let inventory = Dictionary<_,_>()   // or let inventory = Dictionary()
-    inventory.Add("Apples", 0.33)
+```fsharp
+// Generic type inference with Dictionary
+let inventory = Dictionary<_,_>()   // or let inventory = Dictionary()
+
+inventory.Add("Apples", 0.33)
+```
 
 ### dict == IDictionary in BCL
 
-*dict* creates immutable dictionaries. Can’t add and remove items to it.
+*dict* creates immutable dictionaries. You can’t add and remove items to it.
 
-    open System.Collections.Generic
-    let inventory : IDictionary<string, float> =
-        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
-        |> dict
-    let bananas = inventory.["Bananas"]     // 0.45
-    inventory.Add("Pineapples", 0.85)       // System.NotSupportedException
-    inventory.Remove("Bananas")             // System.NotSupportedException
+```fsharp
+open System.Collections.Generic
+
+let inventory : IDictionary<string, float> =
+    ["Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45]
+    |> dict
+
+let bananas = inventory.["Bananas"]     // 0.45
+let bananas2 = inventory["Bananas"]     // 0.45, F# 6
+
+inventory.Add("Pineapples", 0.85)       // System.NotSupportedException
+inventory.Remove("Bananas")             // System.NotSupportedException
+```
 
 Quickly creating full dictionaries:
 
-    [ "Apples", 10; "Bananas", 20; "Grapes", 15 ] |> dict |> Dictionary
+```
+[ "Apples", 10; "Bananas", 20; "Grapes", 15 ] |> dict |> Dictionary
+```
 
 ### Map
 
 *Map* is an immutable key/value lookup. Allows safely add or remove items.
 
-    let inventory =
-        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
-        |> Map.ofList
-    let apples = inventory.["Apples"]
-    let pineapples = inventory.["Pineapples"]   // KeyNotFoundException
-    let newInventory =              // Creates new Map
-        inventory
-        |> Map.add "Pineapples" 0.87
-        |> Map.remove "Apples"
+```fsharp
+let inventory =
+    Map ["Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45]
+
+let apples = inventory.["Apples"]
+let pineapples = inventory.["Pineapples"]   // KeyNotFoundException
+
+let newInventory =              // Creates new Map
+    inventory
+    |> Map.add "Pineapples" 0.87
+    |> Map.remove "Apples"
 
 Safely access a key in a *Map* by using *TryFind*. It returns a wrapped option:
 
-    let inventory =
-        [ "Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45 ]
-        |> Map.ofList
+```fsharp
+let inventory =
+    Map ["Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45]
 
-    inventory.TryFind "Apples"      // option = Some 0.33
-    inventory.TryFind "Unknown"     // option = None
+inventory.TryFind "Apples"      // option = Some 0.33
+inventory.TryFind "Unknown"     // option = None
+```
 
-Useful Map functions:
+Useful Map functions include `map`, `filter`, `partition`:
 
-* map
-* filter
-* iter
-* partition
-
-    let cheapFruit, expensiveFruit =
-        inventory
-        |> Map.partition(fun fruit cost -> cost < 0.3)
+```fsharp
+let cheapFruit, expensiveFruit =
+    inventory
+    |> Map.partition(fun fruit cost -> cost < 0.3)
+```
 
 ### Dictionaries, dict, or Map?
 
@@ -386,66 +452,36 @@ Useful Map functions:
 * Use *Dictionary*:
     * If need a mutable dictionary.
     * Need specific performance requirements. (Example: tight loop performing
-    thousands of additions or removals).
+      thousands of additions or removals).
 
-### Higher-order functions on collections
-The same list `[ 1; 3; 5; 7; 9 ]` or array `[| 1; 3; 5; 7; 9 |]` can be generated in various ways.
+### Generating lists
 
- - Using range operator `..`
-    
-```fsharp
-let xs = [ 1..2..9 ]
-```
-
- - Using list or array comprehensions
-    
-```fsharp
-let ys = [| for i in 0..4 -> 2 * i + 1 |]
-```
-
- - Using `init` function
+The same list `[ 1; 3; 5; 7; 9 ]` can be generated in various ways.
 
 ```fsharp
-let zs = List.init 5 (fun i -> 2 * i + 1)
+[ 1; 3; 5; 7; 9 ]
+[ 1..2..9 ]
+[ for i in 0..4 -> 2 * i + 1 ]
+List.init 5 (fun i -> 2 * i + 1)
 ```
 
-Lists and arrays have comprehensive sets of higher-order functions for manipulation.
-
-  - `fold` starts from the left of the list (or array) and `foldBack` goes in the opposite direction
-     
-```fsharp
-let xs' = Array.fold (fun str n -> 
-          sprintf "%s,%i" str n) "" [| 0..9 |]
-```
-
-  - `reduce` doesn't require an initial accumulator
-  
-```fsharp
-let last xs = List.reduce (fun acc x -> x) xs
-```
-
-  - `map` transforms every element of the list (or array)
+The array `[| 1; 3; 5; 7; 9 |]` can be generated similarly:
 
 ```fsharp
-let ys' = Array.map (fun x -> x * x) [| 0..9 |]
+[| 1; 3; 5; 7; 9 |]
+[| 1..2..9 |]
+[| for i in 0..4 -> 2 * i + 1 |]
+Array.init 5 (fun i -> 2 * i + 1)
 ```
 
-  - `iter`ate through a list and produce side effects
-    
-```fsharp
-let _ = List.iter (printfn "%i") [ 0..9 ] 
-```
+### Functions on collections
 
-All these operations are also available for sequences. The added benefits of sequences are laziness and uniform treatment of all collections implementing `IEnumerable<'T>`.
+Lists and arrays have comprehensive functions for manipulation.
 
-```fsharp
-let zs' =
-    seq { 
-    for i in 0..9 do
-          printfn "Adding %d" i
-            yield i
-      }
-```
+  - `List.map` transforms every element of the list (or array)
+  - `List.iter` iterates through a list and produces side effects
+
+These and other functions are covered below. All these operations are also available for sequences. 
 
 <a name="TuplesAndRecords"></a>Tuples and Records
 ------------------
@@ -502,8 +538,32 @@ let isPaul person =
     | _ -> false
 ```
 
+<a name="Recursive Functions"></a>Recursive Functions
+----------------
+
+The `rec` keyword is used together with the `let` keyword to define a recursive function:
+
+```fsharp
+let rec fact x =
+    if x < 1 then 1
+    else x * fact (x - 1)
+```
+
+*Mutually recursive* functions (those functions which call each other) are indicated by `and` keyword:
+
+```fsharp
+let rec even x =
+   if x = 0 then true 
+   else odd (x - 1)
+
+and odd x =
+   if x = 0 then false
+   else even (x - 1)
+```
+
 <a name="DiscriminatedUnions"></a>Discriminated Unions
 --------------------
+
 *Discriminated unions* (DU) provide support for values that can be one of a number of named cases, each possibly with different values and types.
 
 ```fsharp
@@ -512,7 +572,8 @@ type Tree<'T> =
     | Leaf
 
 
-let rec depth = function
+let rec depth input =
+    match input with
     | Node(l, _, r) -> 1 + max (depth l) (depth r)
     | Leaf -> 0
 ```
@@ -521,7 +582,7 @@ F# Core has a few built-in discriminated unions for error handling, e.g., [Optio
 
 ```fsharp
 let optionPatternMatch input =
-   match input with
+    match input with
     | Some i -> printfn "input is an int=%d" i
     | None -> printfn "input is missing"
 ```
@@ -545,8 +606,8 @@ The `failwith` function throws an exception of type `Exception`.
 ```fsharp
 let divideFailwith x y =
     if y = 0 then 
-      failwith "Divisor cannot be zero." 
-      else x / y
+        failwith "Divisor cannot be zero." 
+        else x / y
 ```
 
 Exception handling is done via `try/with` expressions.
@@ -557,7 +618,7 @@ let divide x y =
         Some (x / y)
     with :? System.DivideByZeroException -> 
         printfn "Division by zero!"
-      None
+        None
 ```
   
 The `try/finally` expression enables you to execute clean-up code even if a block of code throws an exception. Here's an example which also defines custom exceptions.
@@ -568,13 +629,13 @@ exception OuterError of string
   
 let handleErrors x y =
    try 
-     try 
-        if x = y then raise (InnerError("inner"))
-        else raise (OuterError("outer"))
-     with InnerError(str) -> 
-      printfn "Error1 %s" str
+       try 
+           if x = y then raise (InnerError("inner"))
+           else raise (OuterError("outer"))
+       with InnerError(str) -> 
+          printfn "Error1 %s" str
    finally
-      printfn "Always print this."
+       printfn "Always print this."
 ```
 
 <a name="ClassesAndInheritance"></a>Classes and Inheritance
@@ -582,26 +643,29 @@ let handleErrors x y =
 This example is a basic class with (1) local let bindings, (2) properties, (3) methods, and (4) static members.
 
 ```fsharp
-type Vector(x : float, y : float) =
-  let mag = sqrt(x * x + y * y) // (1)
-    member this.X = x // (2)
-    member this.Y = y
-    member this.Mag = mag
-  member this.Scale(s) = // (3)
+type Vector(x: float, y: float) =
+    let mag = sqrt(x * x + y * y)               // (1) - local let binding
+
+    member this.X = x                           // (2) property
+    member this.Y = y                           // (2) property
+    member this.Mag = mag                       // (2) property
+
+    member this.Scale(s) =                       // (3) method
         Vector(x * s, y * s)
-  static member (+) (a : Vector, b : Vector) = // (4)
+
+    static member (+) (a : Vector, b : Vector) = // (4) static method
         Vector(a.X + b.X, a.Y + b.Y)
 ```
 
-Call a base class from a derived one.
+Call a base class from a derived one:
 
 ```fsharp
 type Animal() =
-    member __.Rest() = ()
+    member _.Rest() = ()
            
 type Dog() =
     inherit Animal()
-    member __.Run() =
+    member _.Run() =
         base.Rest()
 ```
 
@@ -610,6 +674,16 @@ type Dog() =
 ```fsharp
 let dog = Dog() 
 let animal = dog :> Animal
+```
+
+In many places type inference applies upcasting automatically:
+
+```fsharp
+let exerciseAnimal (animal: Animal) = () 
+
+let dog = Dog()
+
+exerciseAnimal dog   // no need to upcast dog to Animal
 ```
 
 *Dynamic downcasting* (`:?>`) might throw an `InvalidCastException` if the cast doesn't succeed at runtime.
@@ -626,11 +700,13 @@ Declare `IVector` interface and implement it in `Vector'`.
 type IVector =
     abstract Scale : float -> IVector
 
-type Vector'(x, y) =
+type Vector(x, y) =
     interface IVector with
         member __.Scale(s) =
-            Vector'(x * s, y * s) :> IVector
+            Vector(x * s, y * s) :> IVector
+            
     member __.X = x
+    
     member __.Y = y
 ```
 
@@ -649,6 +725,7 @@ let createCustomer name age =
 
 <a name="ActivePatterns"></a>Active Patterns
 ---------------
+
 *Complete active patterns*:
 
 ```fsharp
@@ -661,13 +738,14 @@ let testNumber i =
     | Odd -> printfn "%d is odd" i
 ```
 
-*Parameterized active patterns*:
+*Parameterized, partial active patterns*:
 
 ```fsharp
-let (|DivisibleBy|_|) by n = 
-  if n % by = 0 then Some DivisibleBy else None
+let (|DivisibleBy|_|) divisor n = 
+  if n % divisor = 0 then Some DivisibleBy else None
 
-let fizzBuzz = function 
+let fizzBuzz input =
+    match input with
     | DivisibleBy 3 & DivisibleBy 5 -> "FizzBuzz" 
     | DivisibleBy 3 -> "Fizz" 
     | DivisibleBy 5 -> "Buzz" 
@@ -678,26 +756,42 @@ let fizzBuzz = function
 
 <a name="CompilerDirectives"></a>Compiler Directives
 -------------------
-Load another F# source file into FSI.
+
+Load another F# source file into F# Interactive (`dotnet fsi`).
 
 ```fsharp
 #load "../lib/StringParsing.fs"
 ```
 
-Reference a .NET assembly (`/` symbol is recommended for Mono compatibility).
+Reference a .NET package:
+
+```fsharp
+#r "nuget: FSharp.Data"                // latest non-beta version
+#r "nuget: FSharp.Data,Version=4.2.2"  // specific version
+```
+
+Specifying a package source:
+
+```fsharp
+#i "nuget: https://my-remote-package-source/index.json"
+
+#i """nuget: C:\path\to\my\local\source"""
+```
+
+Reference a specific .NET assembly file:
 
 ```fsharp
 #r "../lib/FSharp.Markdown.dll"
 ```
 
-Include a directory in assembly search paths.
+Include a directory in assembly search paths:
 
 ```fsharp
 #I "../lib"
 #r "FSharp.Markdown.dll"
 ```
 
-Other important directives are conditional execution in FSI (`INTERACTIVE`) and querying current directory (`__SOURCE_DIRECTORY__`).
+Other important directives are conditional execution in FSI (`INTERACTIVE`), conditional for compiled code (`COMPILED`) and querying current directory (`__SOURCE_DIRECTORY__`).
 
 ```fsharp
 #if INTERACTIVE
@@ -706,131 +800,156 @@ let path = __SOURCE_DIRECTORY__ + "../lib"
 let path = "../../../lib"
 #endif
 ```
+
 <a name="MappingFunctions"></a>Mapping functions
 -------------------
 
-#### map (Array, List, Seq)    == Select() in LINQ
+#### map (Array, List, Seq)
 
 Converts all the items in a collection from one shape to another shape.
 Always returns the same number of items in the output collection as were passed in.
 
-    // [2; 4; 6; 8; 10; 12; 14; 16; 18; 20]
-    let mapList = [1 .. 10] |> List.map (fun n -> n * 2)
+```fsharp
+// [2; 4; 6; 8; 10; 12; 14; 16; 18; 20]
+[1 .. 10] |> List.map (fun n -> n * 2)
 
-    type Person = { Name : string; Town : string }
-    let persons =
-        [
-            { Name = "Isaak"; Town = "London" }
-            { Name = "Sara"; Town = "Birmingham" }
-            { Name = "Tim"; Town = "London" }
-            { Name = "Michelle"; Town = "Manchester" }
-        ]
-    // ["London"; "Birmingham"; "London"; "Manchester"]
-    let towns = persons |> List.map (fun person -> person.Town)
+type Person = { Name : string; Town : string }
+
+let persons =
+    [
+        { Name = "Isaak"; Town = "London" }
+        { Name = "Sara"; Town = "Birmingham" }
+        { Name = "Tim"; Town = "London" }
+        { Name = "Michelle"; Town = "Manchester" }
+    ]
+
+// ["London"; "Birmingham"; "London"; "Manchester"]
+persons |> List.map (fun person -> person.Town)
+```
 
 #### map2, map3 (Array, List, Seq)
 
 *map2* and *map3* are variations of *map* that take multiple lists.
+ The collections must have equal lengths, except for `Seq.map2` and `Seq.map3` where extra elements are ignored.
+ 
+```fsharp
+let list1 = [1; 2; 3]
+let list2 = [4; 5; 6]
+let list3 = [7; 8; 9]
 
-    let list1 = [ 1; 2; 3 ]
-    let list2 = [ 4; 5; 6 ]
+// [5; 7; 9]
+(list1, list2) ||> List.map2 (fun x y -> x + y)
 
-    // [5; 7; 9]
-    let sumList2 = List.map2 (fun x y -> x + y) list1 list2
-
-    // [12; 15; 18]
-    let sumList3 = List.map3 (fun x y z -> x + y + z) list1 list2 [7; 8; 9]
+// [12; 15; 18]
+(list1, list2, list3) |||> List.map3 (fun x y z -> x + y + z) 
+```
 
 #### mapi, mapi2 (Array, List, Seq)
 
 *mapi* and *mapi2* - in addition to the element, the function needs to be
-passed the index of each element. The only difference *mapi2* and *mapi* is that *mapi2 works*
+passed the index of each element. The only difference `mapi2` and `mapi` is that `mapi2` works
 with two collections.
 
-    let list1 = [ 9; 12; 53; 24; 35]
+```fsharp
+let list1 = [9; 12; 53; 24; 35]
 
-    // [(0, 9); (1, 12); (2, 53); (3, 24); (4, 35)]
-    let out1 = list1 |> List.mapi (fun x i -> (x, i))
-    // [9; 13; 55; 27; 39]
-    let out2 = list1 |> List.mapi (fun x i -> x + i)
+// [(0, 9); (1, 12); (2, 53); (3, 24); (4, 35)]
+list1 |> List.mapi (fun x i -> (x, i))
 
-    let list1 = [9; 12; 3]
-    let list2 = [24; 5; 2]
-    // [0; 17; 10]
-    let listAddTimesIndex = List.mapi2 (fun i x y -> (x + y) * i) list1 list2
+// [9; 13; 55; 27; 39]
+list1 |> List.mapi (fun x i -> x + i)
+
+let list1 = [9; 12; 3]
+let list2 = [24; 5; 2]
+
+// [0; 17; 10]
+(list1, list2) ||> List.mapi2 (fun i x y -> (x + y) * i) 
+```
 
 ### indexed (Array, List, Seq)
 
 Returns a new collection whose elements are the corresponding elements of the input
 paired with the index (from 0) of each element.
 
-    let arr1 = [|23; 5; 12|]
-    // [|(0, 23); (1, 5); (2, 12)|]
-    let result = Array.indexed arr1
+```fsharp
+let list1 = [23; 5; 12]
+
+// [(0, 23); (1, 5); (2, 12)]
+let result = list1 |> Array.indexed
+```
 
 ### iter, iter2, iteri, iteri2 (Array, List, Seq)
 
-*iter* is essentially the same as *map*, except the function that you pass in
-must return unit.
+*iter* is the same as a `for` loop, the function that you pass in must return unit.
 
-    let list1 = [1; 2; 3]
-    let list2 = [4; 5; 6]
+```fsharp
+let list1 = [1; 2; 3]
+let list2 = [4; 5; 6]
 
-    // Prints: 1; 2; 3; 
-    List.iter (fun x -> printf "%d; " x) list1
+// Prints: 1; 2; 3; 
+list1 |> List.iter (fun x -> printf "%d; " x)
 
-    // Prints: (1 4); (2 5); (3 6);
-    List.iter2 (fun x y -> printf "(%d %d); " x y) list1 list2
+// Prints: (1 4); (2 5); (3 6);
+(list1, list2) ||> List.iter2 (fun x y -> printf "(%d %d); " x y)
 
-    // Prints: ([0] = 1); ([1] = 2); ([2] = 3);
-    List.iteri (fun i x -> printf "([%d] = %d); " i x) list1
+// Prints: ([0] = 1); ([1] = 2); ([2] = 3);
+list1 |> List.iteri (fun i x -> printf "([%d] = %d); " i x)
 
-    // Prints: ([0] = 1 4); ([1] = 2 5); ([2] = 3 6);
-    List.iteri2 (fun i x y -> printf "([%d] = %d %d); " i x y) list1 list2
+// Prints: ([0] = 1 4); ([1] = 2 5); ([2] = 3 6);
+(list1, list2) ||> List.iteri2 (fun i x y -> printf "([%d] = %d %d); " i x y) 
+```
 
 ### collect (Array, List, Seq)
 
 *collect* runs a specified function on each element and then collects the elements
 generated by the function and combines them into a new collection.
 
-    // [|0; 1; 0; 1; 2; 3; 4; 5; 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10|]
-    printfn "%A" (Array.collect (fun elem -> [| 0 .. elem |]) [| 1; 5; 10|])
+```fsharp
+// [0; 1; 0; 1; 2; 3; 4; 5; 0; 1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+let list1 = [1; 5; 10]
+let list2 = [1; 2; 3]
 
-    let lst1 = [1; 2; 3]
-    // [1; 2; 3; 2; 4; 6; 3; 6; 9]
-    let collectList = List.collect (fun x -> [for i in 1..3 -> x * i]) lst1
+list1 |> List.collect (fun elem -> [0 .. elem])
 
-    // Example 3
-    type Customer =
+// [1; 2; 3; 2; 4; 6; 3; 6; 9]
+list2 |> List.collect (fun x -> [for i in 1..3 -> x * i])
+
+// Example 3
+type Customer =
     {
         Id: int
         OrderId: int list
     }
 
-    let c1 = { Id = 1; OrderId = [1; 2]}
-    let c2 = { Id = 2; OrderId = [43]}
-    let c3 = { Id = 5; OrderId = [39; 56]}
-    let customers = [c1; c2; c3]
+let c1 = { Id = 1; OrderId = [1; 2]}
+let c2 = { Id = 2; OrderId = [43]}
+let c3 = { Id = 5; OrderId = [39; 56]}
+let customers = [c1; c2; c3]
 
-    // [1; 2; 43; 39; 56]
-    let orders = customers |> List.collect(fun c -> c.OrderId)
+// [1; 2; 43; 39; 56]
+let orders = customers |> List.collect(fun c -> c.OrderId)
+```
 
 ### pairwise (Array, List, Seq)
 
 *pairwise* takes a collection and returns a new list of tuple pairs of
 the original adjacent items.
 
-    //  [(1, 30); (30, 12); (12, 20)]
-    [1; 30; 12; 20] |> List.pairwise
+```fsharp
+let list1 = [1; 30; 12; 20]
 
-    // [31.0; 11.0; 21.0]
-    [ DateTime(2010,5,1)
-      DateTime(2010,6,1)
-      DateTime(2010,6,12)
-      DateTime(2010,7,3) ]
-    |> List.pairwise
-    |> List.map(fun (a, b) -> b - a)
-    |> List.map(fun time -> time.TotalDays)
+//  [(1, 30); (30, 12); (12, 20)]
+list1 |> List.pairwise
+
+// [31.0; 11.0; 21.0]
+[ DateTime(2010,5,1)
+  DateTime(2010,6,1)
+  DateTime(2010,6,12)
+  DateTime(2010,7,3) ]
+|> List.pairwise
+|> List.map(fun (a, b) -> b - a)
+|> List.map(fun time -> time.TotalDays)
+```
 
 ### windowed (Array, List, Seq)
 
@@ -838,9 +957,10 @@ Returns a list of sliding windows containing elements drawn from the input
 collection. Each window is returned as a fresh collection. Unlike *pairwise* 
 the windows are collections, not tuples.
 
-    // [['a'; 'b'; 'c']; ['b'; 'c'; 'd']; ['c'; 'd'; 'e']]
-    ['a'..'e'] |> List.windowed 3
-
+```fsharp
+// [['a'; 'b'; 'c']; ['b'; 'c'; 'd']; ['c'; 'd'; 'e']]
+['a'..'e'] |> List.windowed 3
+```
 
 <a name="GroupingFunctions"></a>Grouping functions
 -------------------
@@ -851,25 +971,34 @@ the windows are collections, not tuples.
 The first element of the tuple is the key, and the second element is the collection of items
 in that group.
 
-    type Person = { Name: string; Town: string }
-    let persons = [
-        { Name = "Isaak"; Town = "London" }
-        { Name = "Sara"; Town = "Birnmingham" }
-        { Name = "Tim"; Town = "London" }
-        { Name = "Michelle"; Town = "Manchester" } ]
+```fsharp
+type Person =
+    {
+        Name: string
+        Town: string
+    }
 
-    // [("London", [{ Name = "Isaak"; Town = "London" }; { Name = "Tim"; Town = "London" }]);
-    //  ("Birnmingham", [{ Name = "Sara"; Town = "Birnmingham" }]);
-    //  ("Manchester", [{ Name = "Michelle"; Town = "Manchester" }])]
-    persons |> List.groupBy (fun person -> person.Town)
+let persons =
+    [ { Name = "Isaak"; Town = "London" }
+      { Name = "Sara"; Town = "Birnmingham" }
+      { Name = "Tim"; Town = "London" }
+      { Name = "Michelle"; Town = "Manchester" } ]
+
+// [("London", [{ Name = "Isaak"; Town = "London" }; { Name = "Tim"; Town = "London" }]);
+//  ("Birnmingham", [{ Name = "Sara"; Town = "Birnmingham" }]);
+//  ("Manchester", [{ Name = "Michelle"; Town = "Manchester" }])]
+persons |> List.groupBy (fun person -> person.Town)
+```
 
 ### countBy (Array, List, Seq)
 
 A useful derivative of *groupBy* is *countBy*. This has a similar signature, but instead of
 returning the items in the group, it returns the number of items in each group.
 
-    type Person = { Name: string; Town: string }
-    let persons =
+```fsharp
+type Person = { Name: string; Town: string }
+
+let persons =
     [
         { Name = "Isaak"; Town = "London" }
         { Name = "Sara"; Town = "Birnmingham" }
@@ -877,17 +1006,20 @@ returning the items in the group, it returns the number of items in each group.
         { Name = "Michelle"; Town = "Manchester" }
     ]
 
-    // [("London", 2); ("Birnmingham", 1); ("Manchester", 1)]
-    persons |> List.countBy (fun person -> person.Town)
+// [("London", 2); ("Birnmingham", 1); ("Manchester", 1)]
+persons |> List.countBy (fun person -> person.Town)
+```
 
 ### partition (Array, List)
 
 *partition* use predicate and a collection; it returns two collections,
 partitioned based on the predicate:
 
-    // Tupled result in two lists
-    let londonPersons, otherPersons =
-        persons |> List.partition(fun p -> p.Town = "London")
+```fsharp
+// Tupled result in two lists
+let londonPersons, otherPersons =
+    persons |> List.partition(fun p -> p.Town = "London")
+```
 
 If there are no matches for either half of the split, an empty collection is
 returned for that half.
@@ -896,17 +1028,12 @@ returned for that half.
 
 *chunkBySize* groups elements into arrays (chunks) of a given size.
 
-    let xs = seq [1..8]
-    // seq<int []> = seq [[|1; 2; 3|]; [|4; 5; 6|]; [|7; 8|]
-    let chunked = xs |> Seq.chunkBySize 3
+```fsharp
+let list1 = [33; 5; 16]
 
-    let list1 = [33; 5; 16]
-    // int list list = [[33; 5]; [16]]
-    let chunkedLst = list1 |> List.chunkBySize 2
-
-    let arr1 = [| "b"; "z"; "f" |]
-    // string [] [] = [|[|"b"; "z"|]; [|"f"|]|]
-    let chunkedArr = arr1 |> Array.chunkBySize 2
+// int list list = [[33; 5]; [16]]
+let chunkedLst = list1 |> List.chunkBySize 2
+```
 
 ### splitAt (Array, List)
 
@@ -914,25 +1041,30 @@ returned for that half.
 The first part ends just before the element at the given index;
 the second part starts with the element at the given index.
 
-    let xs = [| 1; 2; 3; 4; 5 |]
-    let left1, right1 = xs |> Array.splitAt 0   // [||] and [|1; 2; 3; 4; 5|]
-    let left2, right2 = xs |> Array.splitAt 1   // [|1|] and [|2; 3; 4; 5|]
-    let left3, right3 = xs |> Array.splitAt 5   // [|1; 2; 3; 4; 5|] and [||]
-    let left4, right4 = xs |> Array.splitAt 6   // InvalidOperationException
+```fsharp
+let xs = [| 1; 2; 3; 4; 5 |]
+
+let left1, right1 = xs |> Array.splitAt 0   // [||] and [|1; 2; 3; 4; 5|]
+let left2, right2 = xs |> Array.splitAt 1   // [|1|] and [|2; 3; 4; 5|]
+let left3, right3 = xs |> Array.splitAt 5   // [|1; 2; 3; 4; 5|] and [||]
+let left4, right4 = xs |> Array.splitAt 6   // InvalidOperationException
+```
 
 ### splitInto (Array, List, Seq)
 
 Splits the input collection into at most count chunks.
 
-    [1..10] |> List.splitInto 3
-    // [[1; 2; 3; 4]; [5; 6; 7]; [8; 9; 10]]
-    // note that the first chunk has four elements
-    
-    [1..10] |> List.splitInto 4
-    // [[1; 2; 3]; [4; 5; 6]; [7; 8]; [9; 10]]
-    
-    [1..10] |> List.splitInto 6
-    // [[1; 2]; [3; 4]; [5; 6]; [7; 8]; [9]; [10]]
+```fsharp
+// [[1; 2; 3; 4]; [5; 6; 7]; [8; 9; 10]]
+// note that the first chunk has four elements
+[1..10] |> List.splitInto 3
+
+// [[1; 2; 3]; [4; 5; 6]; [7; 8]; [9; 10]]
+[1..10] |> List.splitInto 4
+
+// [[1; 2]; [3; 4]; [5; 6]; [7; 8]; [9]; [10]]
+[1..10] |> List.splitInto 6
+```
 
 ## Aggregate functions
 -------------------
@@ -944,11 +1076,14 @@ collection of items (often just one).
 
 All of these functions are specialized versions of a more generalized function *fold*.
 
-    let numbers = [ 1.0 .. 10.0 ]
-    let total = numbers |> List.sum         // 55.0
-    let average = numbers |> List.average   // 5.5
-    let max = numbers |> List.max           // 10.0
-    let min = numbers |> List.min           // 1.0
+```fsharp
+let numbers = [1.0 .. 10.0]
+
+let total = numbers |> List.sum         // 55.0
+let average = numbers |> List.average   // 5.5
+let max = numbers |> List.max           // 10.0
+let min = numbers |> List.min           // 1.0
+```
 
 ##  Miscellaneous functions
 -------------------
@@ -957,218 +1092,287 @@ All of these functions are specialized versions of a more generalized function *
 
 *find* - finds the first element that matches a given condition.
 
-    let isDivisibleBy number elem = elem % number = 0
-    let r1 = [ 1 .. 10 ] |> List.find (isDivisibleBy 5)    // 5
-    let r2 = [ 1 .. 10 ] |> List.find (isDivisibleBy 11)   // KeyNotFoundException
+```fsharp
+let isDivisibleBy number elem = elem % number = 0
+
+let input = [1 .. 10]
+
+input |> List.find (isDivisibleBy 5)    // 5
+input |> List.find (isDivisibleBy 11)   // KeyNotFoundException
+```
 
 ### findBack (Array, List, Seq) 
 
-    let isDivisibleBy number elem = elem % number = 0
-    let r1 = [ 1 .. 10 ] |> List.findBack (isDivisibleBy 4)    // 8
-    let r2 = [ 1 .. 10 ] |> List.findBack (isDivisibleBy 11)   // KeyNotFoundException
+```fsharp
+let isDivisibleBy number elem = elem % number = 0
+
+let input = [1 .. 10]
+
+input |> List.findBack (isDivisibleBy 4)    // 8
+input |> List.findBack (isDivisibleBy 11)   // KeyNotFoundException
+```
 
 ### findIndex (Array, List, Seq)
 
-    let isDivisibleBy number elem = elem % number = 0
-    let r1 = [ 1 .. 10 ] |> List.findIndex (isDivisibleBy 5)   // 4
-    let r2 = [ 1 .. 10 ] |> List.findIndex (isDivisibleBy 11)  // KeyNotFoundException
+```fsharp
+let isDivisibleBy number elem = elem % number = 0
+
+let input = [1 .. 10]
+
+input |> List.findIndex (isDivisibleBy 5)   // 4
+input |> List.findIndex (isDivisibleBy 11)  // KeyNotFoundException
+```
 
 ### findIndexBack (Array, List, Seq)
 
-    let isDivisibleBy number elem = elem % number = 0
-    let r1 = [ 1 .. 10 ] |> List.findIndexBack (isDivisibleBy 3)   // 8
-    let r2 = [ 1 .. 10 ] |> List.findIndexBack (isDivisibleBy 11)  // KeyNotFoundException
+```fsharp
+let isDivisibleBy number elem = elem % number = 0
 
-### head (Array, List, Seq)    == First() in LINQ
+let input = [1..10]
 
-Returns the first item in the collection.
+input |> List.findIndexBack (isDivisibleBy 3)   // 8
+input |> List.findIndexBack (isDivisibleBy 11)  // KeyNotFoundException
+```
 
-    let head = [ 15 .. 22 ] |> List.head    // 15
+### head, last, tail, item (Array, List, Seq)
 
-### last (Array, List, Seq)
+Returns the first, last and all-but-first items in the collection.
 
-    let last = [ 15 .. 22 ] |> List.last    // 22
+```fsharp
+let input = [15..22]
 
-### tail (Array, List, Seq)
+input |> List.head    // 15
+input |> List.last    // 22
+input |> List.tail    // [16; 17; 18; 19; 20; 21; 22]
+```
 
-    let tail = [ 15 .. 22 ] |> List.tail    // [16; 17; 18; 19; 20; 21; 22]
-
-### item (Array, List, Seq)    == ElementAt() in LINQ
+### item (Array, List, Seq)
 
 Gets the element at a given index.
 
-    let r1 = [ 1 .. 7 ] |> List.item 5      // 6
-    let r2 = [ 1 .. 7 ] |> List.item 8      // ArgumentException
+```fsharp
+let input = [1..7]
+
+input |> List.item 5      // 6
+input |> List.item 8      // ArgumentException
+```
 
 ### take (Array, List, Seq)
 
 Returns the elements of the collection up to a specified count.
 
-    [ 1..10 ] |> List.take 5        // [1; 2; 3; 4; 5]
-    [ 1..10 ] |> List.take 11       // InvalidOperationException
+```fsharp
+let input = [1..10]
 
-### truncate (Array, List, Seq)    == Take() in LINQ
+input |> List.take 5        // [1; 2; 3; 4; 5]
+input |> List.take 11       // InvalidOperationException
+```
+
+### truncate (Array, List, Seq)
 
 Returns a collection that when enumerated returns at most N elements.
 
-    [ 1..10 ] |> List.truncate 5    // [1; 2; 3; 4; 5]
-    [ 1..10 ] |> List.truncate 11   // [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+```fsharp
+let input = [1..10]
+
+input |> List.truncate 5    // [1; 2; 3; 4; 5]
+input |> List.truncate 11   // [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+```
 
 ### takeWhile (Array, List, Seq)
 
 *takeWhile* returns each item in a new collection until it reaches an item that
 does not meet the predicate.
 
-    [ 1..100 ] |> List.takeWhile (fun x -> x / 7 = 0)   // [1; 2; 3; 4; 5; 6]
-    [ 1..5 ] |> List.takeWhile (fun x -> x / 7 = 0)     // [1; 2; 3; 4; 5]
+```fsharp
+let input = [1..10]
+
+input |> List.takeWhile (fun x -> x / 7 = 0)   // [1; 2; 3; 4; 5; 6]
+input |> List.takeWhile (fun x -> x / 17 = 0)     // [1; 2; 3; 4; 5; 6; 7; 8; 9; 10]
+```
 
 ### skip (Array, List, Seq)
 
 Returns a collection that skips N elements of the underlying sequence and then yields
 the remaining elements.
 
-    List = [ for i in 1 .. 10 -> i * i ]        // [1; 4; 9; 16; 25; 36; 49; 64; 81; 100]
-    let myListSkipFirst5 = List.skip 5 myList   // [36; 49; 64; 81; 100]
-    let myListSkipFirst11 = List.skip 11 myList // ArgumentException
+```fsharp
+let input = [ for i in 1 .. 10 -> i * i ]  // [1; 4; 9; 16; 25; 36; 49; 64; 81; 100]
+
+input |> List.skip 5                       // [36; 49; 64; 81; 100]
+input |> List.skip 11                      // ArgumentException
+```
 
 ### skipWhile (Array, List, Seq)
 
 Returns a collection, when iterated, skips elements of the underlying array (list, seq)
 while the given predicate returns true, and then yields the remaining elements.
 
-    let mySeq = seq { for i in 1 .. 10 -> i * i }                // 1 4 9 16 25 36 49 64 81 100
-    let skipped1 = Seq.skipWhile (fun elem -> elem < 10) mySeq   // 16 25 36 49 64 81 100
-    let skipped2 = Seq.skipWhile (fun elem -> elem < 101) mySeq  // Empty seq
+```fsharp
+let mySeq = seq { for i in 1 .. 10 -> i * i }    // 1 4 9 16 25 36 49 64 81 100
 
-### exists (Array, List, Seq)    == Any() In LINQ
+mySeq |> Seq.skipWhile (fun elem -> elem < 10)   // 16 25 36 49 64 81 100
+mySeq |> Seq.skipWhile (fun elem -> elem < 101)  // Empty seq
+```
+
+### exists (Array, List, Seq)
 
 Tests if any element of the collection satisfies the given predicate.
 
-    [0 .. 3] |> List.exists (fun elem -> elem = 3)      // true
-    [0 .. 3] |> List.exists (fun elem -> elem = 10)     // false
+```fsharp
+let inputs = [0..3]
+
+inputs |> List.exists (fun elem -> elem = 3)      // true
+inputs |> List.exists (fun elem -> elem = 10)     // false
+```
 
 ### exists2 (Array, List, Seq)
 
 Tests if any pair of corresponding elements of the collections satisfies
-the given predicate. Arrays (lists, seqs) must have equal lengths.
+the given predicate. The collections must have equal lengths, except for Seq where extra elements are ignored.
 
-    let list1to5 = [ 1 .. 5 ]           // [1; 2; 3; 4; 5]
-    let list0to4 = [ 0 .. 4 ]           // [0; 1; 2; 3; 4]
-    let list5to1 = [ 5 .. -1 .. 1 ]     // [5; 4; 3; 2; 1]
-    let list6to1 = [ 6 .. -1 .. 1 ]     // [6; 5; 4; 3; 2; 1]
-    List.exists2 (fun i1 i2 -> i1 = i2) list1to5 list5to1   // true
-    List.exists2 (fun i1 i2 -> i1 = i2) list1to5 list0to4   // false
-    List.exists2 (fun i1 i2 -> i1 = i2) list1to5 list6to1   // ArgumentException
+```fsharp
+let list1to5 = [1 .. 5]           // [1; 2; 3; 4; 5]
+let list0to4 = [0 .. 4]           // [0; 1; 2; 3; 4]
+let list5to1 = [5 .. -1 .. 1]     // [5; 4; 3; 2; 1]
+let list6to1 = [6 .. -1 .. 1]     // [6; 5; 4; 3; 2; 1]
 
-### forall (Array, List, Seq)    == All() in LINQ
+(list1to5, list5to1) ||> List.exists2 (fun i1 i2 -> i1 = i2)    // true
+(list1to5, list0to4) ||> List.exists2 (fun i1 i2 -> i1 = i2)    // false
+(list1to5, list6to1) ||> List.exists2 (fun i1 i2 -> i1 = i2)    // ArgumentException
+```
+
+### forall (Array, List, Seq)
 
 Tests if all elements of the collection satisfy the given predicate.
 
-    [2; 4; 6; 8; 10] |> List.forall (fun i -> i % 2 = 0)    // true
-    [2; 4; 7; 8; 10] |> List.forall (fun i -> i % 2 = 0)    // false
+```fsharp
+let inputs = [2; 4; 6; 8; 10]
+
+inputs |> List.forall (fun i -> i % 2 = 0)    // true
+inputs |> List.forall (fun i -> i % 2 = 0)    // false
+```
 
 ### forall2 (Array, List, Seq)
 
-Tests if all corresponding elements of the collection satisfy the given predicate pairwise.
-The collections must have equal lengths.
+Returns true if all corresponding elements of the collection satisfy the given predicate pairwise.
+The collections must have equal lengths, except for Seq where extra elements are ignored.
 
-    let lst1 = [0; 1; 2]
-    let lst2 = [0; 1; 2]
-    let lst3 = [2; 1; 0]
-    let lst4 = [0; 1; 2; 3]
-    List.forall2 (fun i1 i2 -> i1 = i2) lst1 lst2   // true
-    List.forall2 (fun i1 i2 -> i1 = i2) lst1 lst3   // false
-    List.forall2 (fun i1 i2 -> i1 = i2) lst1 lst4   // ArgumentException
+```fsharp
+let lst1 = [0; 1; 2]
+let lst2 = [0; 1; 2]
+let lst3 = [2; 1; 0]
+let lst4 = [0; 1; 2; 3]
 
-### contains (Array, List, Seq)    == Contains() in LINQ
+(lst1, lst2) ||> List.forall2 (fun i1 i2 -> i1 = i2)    // true
+(lst1, lst3) ||> List.forall2 (fun i1 i2 -> i1 = i2)    // false
+(lst1, lst4) ||> List.forall2 (fun i1 i2 -> i1 = i2)    // ArgumentException
+```
 
-    let rushSet = set ["Dirk"; "Lerxst"; "Pratt"]
-    let gotSet = rushSet |> Set.contains "Lerxst"      // true
+### contains (Array, List, Seq)
 
-*contains* is just a special case of *exists*, which is can be defined in corresponding modules:
+Returns true if a collection contains an equal value:
 
-    // Define contains in String module
-    module String = let contains x = String.exists ((=) x)
-    // Now we can use String.contains
-    let gotX = "Lerxst" |> String.contains 'x'         // true
+```fsharp
+let rushSet = ["Dirk"; "Lerxst"; "Pratt"]
+let gotSet = rushSet |> List.contains "Lerxst"      // true
+```
 
-### filter, where (Array, List, Seq)    == Where() in LINQ
+### filter, where (Array, List, Seq)
 
 Returns a new collection containing only the elements of the collection
 for which the given predicate returns true.
 
-    let data = [
-        ("Cats",4);
-        ("Tiger",5);
-        ("Mice",3);
-        ("Elephants",2) ]
+```fsharp
+let data =
+    [("Cats",4)
+     ("Tiger",5)
+     ("Mice",3)
+     ("Elephants",2) ]
 
-    // [("Cats", 4); ("Mice", 3)]
-    data |> List.filter (fun (nm, x) -> nm.Length <= 4)
-    data |> List.where (fun (nm, x) -> nm.Length <= 4)
+// [("Cats", 4); ("Mice", 3)]
+data |> List.filter (fun (nm, x) -> nm.Length <= 4)
+data |> List.where (fun (nm, x) -> nm.Length <= 4)
+```
 
-
-### length (Array, List, Seq)    == Count() in LINQ
+### length (Array, List, Seq)
 
 Returns the length of the collection.
 
-    [ 1 .. 100 ] |> List.length         // 100
-    [ ] |> List.length                  // 0
-    [ 1 .. 2 .. 100 ] |> List.length    // 50
+```fsharp
+[ 1 .. 100 ] |> List.length         // 100
+[ ] |> List.length                  // 0
+[ 1 .. 2 .. 100 ] |> List.length    // 50
+```
 
 ### distinctBy (Array, List, Seq)
 
 Returns a collection that contains no duplicate entries according to the generic hash and
 equality comparisons on the keys returned by the given key-generating function.
 
-    // [-5; -4; -3; -2; -1; 0; 6; 7; 8; 9; 10]
-    [ -5 .. 10 ] |> List.distinctBy (fun i -> abs i)
+```
+let inputs = [-5 .. 10]
+
+// [-5; -4; -3; -2; -1; 0; 6; 7; 8; 9; 10]
+inputs  |> List.distinctBy (fun i -> abs i)
+```
 
 ### distinct (Array, List, Seq)    == Distinct() in LINQ
 
 Returns a collection that contains no duplicate entries according to generic hash and
 equality comparisons on the entries.
 
-    [ 1; 3; 10; 4; 3; 1 ] |> List.distinct    // [1; 3; 10; 4]
-    [ 1; 1; 1; 1; 1; 1 ] |> List.distinct     // [1]
-    [ ] |> List.distinct                      // error FS0030: Value restriction
+```fsharp
+[1; 3; 9; 4; 3; 1] |> List.distinct    // [1; 3; 9; 4]
+[1; 1; 1; 1; 1; 1] |> List.distinct     // [1]
+[ ] |> List.distinct                    // error FS0030: Value restriction
+```
 
 ### sortBy (Array, List, Seq)    == OrderBy() in LINQ
 
 Sorts the given collection using keys given by the given projection.
 Keys are compared using *Operators.compare*.
 
-    [ 1; 4; 8; -2; 5 ] |> List.sortBy (fun x -> abs x)    // [ 1; -2; 4; 5; 8 ]
+```fsharp
+[1; 4; 8; -2; 5] |> List.sortBy (fun x -> abs x)    // [1; -2; 4; 5; 8]
+```
 
 ### sort (Array, List, Seq)
 
 Sorts the given list using *Operators.compare*.
 
-    [ 1; 4; 8; -2; 5 ] |> List.sort    // [ -2; 1; 4; 5; 8 ]
+```fsharp
+[1; 4; 8; -2; 5] |> List.sort    // [-2; 1; 4; 5; 8]
+```
 
 ### sortByDescending (Array, List, Seq)
 
-    [ -3..3 ] |> List.sortByDescending (fun x -> abs x)   // [ -3; 3; -2; 2; -1; 1; 0 ]
+```fsharp
+[-3..3] |> List.sortByDescending (fun x -> abs x)   // [-3; 3; -2; 2; -1; 1; 0]
+```
 
 ### sortDescending (Array, List, Seq)
 
-    [ 0..5 ] |> List.sortDescending    // [ 5; 4; 3; 2; 1; 0 ]
+```fsharp
+[0..5] |> List.sortDescending    // [5; 4; 3; 2; 1; 0]
+```
 
 ### sortWith (Array, List, Seq)
 
 Sorts the given collection using the given comparison function.
 
-    let lst = [ "<>"; "&"; "&&"; "&&&"; "<"; ">"; "|"; "||"; "|||" ]
-    
-    let sortFunction (str1: string) (str2: string) =
-        if (str1.Length > str2.Length) then
-            1
-        else
-            -1
+```fsharp
+let lst = ["<>"; "&"; "&&"; "&&&"; "<"; ">"; "|"; "||"; "|||"]
 
-    // ["|"; ">"; "<"; "&"; "||"; "&&"; "<>"; "|||"; "&&&"]
-    lst |> List.sortWith sortFunction
+let sortFunction (str1: string) (str2: string) =
+    if (str1.Length > str2.Length) then
+        1
+    else
+        -1
 
+// ["|"; ">"; "<"; "&"; "||"; "&&"; "<>"; "|||"; "&&&"]
+lst |> List.sortWith sortFunction
+```
 
 <a name="ArrayListAndSeqUsefulFunctions"></a>Array, List and Seq useful functions
 -------------------
@@ -1177,41 +1381,36 @@ Sorts the given collection using the given comparison function.
 
 Takes 2 arrays (list, seq), and returns all possible pairs of elements.
 
-    let arr1 = [| 0; 1 |]
-    let arr2 = [| 4; 5 |]
-    let allPairsArr =
-        Array.allPairs arr1 arr2    // [|(0, 4); (0, 5); (1, 4); (1, 5)|]
+```fsharp
+let arr1 = [| 0; 1 |]
+let arr2 = [| 4; 5 |]
+
+(arr1, arr2) ||> Array.allPairs arr1 arr2    // [|(0, 4); (0, 5); (1, 4); (1, 5)|]
+```
 
 ### append (Array, List, Seq)
 
 Combines 2 arrays (list, seq).
 
-    let list1 = [33; 5; 16]
-    let list2 = [42; 23; 18]
-    let appendLst =
-        List.append list1 list2     // [33; 5; 16; 42; 23; 18]
+```fsharp
+let list1 = [33; 5; 16]
+let list2 = [42; 23; 18]
+
+List.append list1 list2     // [33; 5; 16; 42; 23; 18]
+```
 
 ### averageBy (Array, List, Seq)
 
 *averageBy* take a function as a parameter, and this function's results are used
 to calculate the values for the average.
 
-    // val avg1 : float = 2.0
-    let avg1 = List.averageBy (fun elem -> float elem) [1 .. 3]
+```fsharp
+// val avg1 : float = 2.0
+[1..3] |> List.averageBy (fun elem -> float elem)
 
-    // val avg2 : float = 4.666666667
-    let avg2 = Array.averageBy (fun elem -> float (elem * elem)) [|1 .. 3|]
-
-### Array.blit
-
-Reads a range of elements from the first array and writes them into the second.
-
-    let array1 = [| "a"; "b"; "c"; "d"; "e"; "f"; "g" |]
-    let array2 = [| "m"; "n"; "o"; "p"; "q"; "r"; "s"; "t" |]
-    // Copy 3 elements from index 2 of array1 to index 4 of array2.
-    Array.blit array1 2 array2 4 3
-    printfn "%A" array2
-    // [|"m"; "n"; "o"; "p"; "c"; "d"; "e"; "t"|]
+// val avg2 : float = 4.666666667
+[| 1..3 |] |> Array.averageBy (fun elem -> float (elem * elem))
+```
 
 ### Seq.cache
 
@@ -1226,18 +1425,12 @@ and remaining threads can use the cached sequence.
 
 *choose* enables you to transform and select elements at the same time.
 
-    let list1 = [33; 5; 16]
-    // [34; 6; 17]
-    List.choose (fun elem -> Some(elem + 1)) list1
+```fsharp
+let list1 = [33; 5; 16]
 
-    // [|4.0; 16.0; 36.0; 64.0; 100.0|]
-    printfn "%A" (Array.choose
-        (fun elem ->
-            if elem % 2 = 0 then
-                Some(float (elem * elem))
-            else
-                None)
-        [| 1 .. 10 |])
+// [34; 6; 17]
+list1 |> List.choose (fun elem -> Some(elem + 1)) 
+```
 
 ### compareWith (Array, List, Seq)
 
@@ -1245,28 +1438,29 @@ Compare two arrays (lists, seq) by using the *compareWith* function.
 The function compares successive elements in turn, and stops when it encounters
 the first unequal pair. Any additional elements do not contribute to the comparison.
 
-    let sq1 = seq { 1; 2; 4; 5; 7 }
-    let sq2 = seq { 1; 2; 3; 5; 8 }
-    let sq3 = seq { 1; 3; 3; 5; 2 }
+```fsharp
+let sq1 = seq { 1; 2; 4; 5; 7 }
+let sq2 = seq { 1; 2; 3; 5; 8 }
+let sq3 = seq { 1; 3; 3; 5; 2 }
 
-    let compareSeq =
-        Seq.compareWith (fun e1 e2 ->
-            if e1 > e2 then 1
-            elif e1 < e2 then -1
-            else 0)
+let compareSeq seq1 seq2 =
+    (seq1, seq2 ||> Seq.compareWith (fun e1 e2 ->
+        if e1 > e2 then 1
+        elif e1 < e2 then -1
+        else 0)
 
-    let compareResult1 = compareSeq sq1 sq2     // int = 1
-    let compareResult2 = compareSeq sq2 sq3     // int = -1
+let compareResult1 = compareSeq sq1 sq2     // int = 1
+let compareResult2 = compareSeq sq2 sq3     // int = -1
+```
 
 ### concat (Array, List, Seq)
 
 *concat* is used to join any number of arrays (lists, seq).
 
-    // int [] = [|0; 1; 2; 3; 8; -1; 0; 1; 2|]
-    Array.concat [ [|0..3|] ; [|8|] ; [|-1.. 2|] ]
-
-    // int list = [1; 2; 3; 4; 5; 6; 7; 8; 9]
-    let listConcat = List.concat [ [1; 2; 3]; [4; 5; 6]; [7; 8; 9] ]
+```fsharp
+// int list = [1; 2; 3; 4; 5; 6; 7; 8; 9]
+List.concat [[1; 2; 3]; [4; 5; 6]; [7; 8; 9]]
+```
 
 ### Array.copy
 
@@ -1274,18 +1468,19 @@ Creates a new array that contains elements that are copied from an existing arra
 **The copy is a shallow copy**, which means that if the element type is a reference type,
 only the reference is copied, not the underlying object. 
 
-    let firstArray : StringBuilder array = Array.init 3 (fun index -> new StringBuilder(""))
-    let secondArray = Array.copy firstArray
-    // Two arrays: [|; ; |]
+```fsharp
+let firstArray : StringBuilder array = Array.init 3 (fun index -> new StringBuilder(""))
+let secondArray = Array.copy firstArray
+// Two arrays: [|; ; |]
 
-    firstArray.[0] <- new StringBuilder("Test1")
-    // firstArray: [|Test1; ; |]
-    // secondArray: [|; ; |]
+firstArray.[0] <- new StringBuilder("Test1")
+// firstArray: [|Test1; ; |]
+// secondArray: [|; ; |]
 
-    firstArray.[1].Insert(0, "Test2") |> ignore
-    // firstArray: [|Test1; Test2; |]
-    // secondArray: [|; Test2; |]
-
+firstArray.[1].Insert(0, "Test2") |> ignore
+// firstArray: [|Test1; Test2; |]
+// secondArray: [|; Test2; |]
+```
 
 <a name="Acknowledgments"></a>Acknowledgments
 --------
