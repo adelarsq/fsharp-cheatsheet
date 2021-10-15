@@ -19,15 +19,11 @@ Contents
 [Classes and Inheritance](#ClassesAndInheritance)  
 [Interfaces and Object Expressions](#InterfacesAndObjectExpressions)  
 [Active Patterns](#ActivePatterns)  
-[Compiler Directives](#CompilerDirectives)
-
-[Mapping functions](#MappingFunctions)
-
-[Grouping functions](#GroupingFunctions)
-
-[Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)
-
-[Acknowledgments](#Acknowledgments)
+[Compiler Directives](#CompilerDirectives)  
+[Mapping functions](#MappingFunctions)  
+[Grouping functions](#GroupingFunctions)  
+[Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)  
+[Acknowledgments](#Acknowledgments)  
 
 -------------------
 
