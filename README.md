@@ -206,6 +206,9 @@ while mutVal < 10 do        // while (not) test-expression do
 The [`let`](https://docs.microsoft.com/dotnet/fsharp/language-reference/functions/let-bindings) keyword also defines named functions.
 
 ```fsharp
+let pi () = 3.14159 // function with no arguments. () is called unit type
+pi ()               // it's necessary to use () to call the function
+
 let negate x = x * -1 
 let square x = x * x 
 let print x = printfn $"The number is: %d{x}"
