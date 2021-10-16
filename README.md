@@ -47,7 +47,7 @@ let result = 1 + 1 = 2
 <a name="Strings"></a>Strings
 -------
 
-The F# `string` type is an alias for `System.String` type. See [Strings](See [Strings](https://docs.microsoft.com/dotnet/fsharp/language-reference/strings).
+The F# `string` type is an alias for `System.String` type. See [Strings](https://docs.microsoft.com/dotnet/fsharp/language-reference/strings).
 
 ```fsharp
 /// Create a string using string concatenation
