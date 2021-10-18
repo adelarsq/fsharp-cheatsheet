@@ -18,6 +18,7 @@ Contents
 [Exceptions](#Exceptions)  
 [Classes and Inheritance](#ClassesAndInheritance)  
 [Interfaces and Object Expressions](#InterfacesAndObjectExpressions)  
+[Casting and Conversions](#CastingAndConversions)  
 [Active Patterns](#ActivePatterns)  
 [Compiler Directives](#CompilerDirectives)  
 [Mapping functions](#MappingFunctions)  
@@ -672,29 +673,6 @@ type Dog() =
         base.Rest()
 ```
 
-*Upcasting* is denoted by `:>` operator.
-
-```fsharp
-let dog = Dog() 
-let animal = dog :> Animal
-```
-
-In many places type inference applies upcasting automatically:
-
-```fsharp
-let exerciseAnimal (animal: Animal) = () 
-
-let dog = Dog()
-
-exerciseAnimal dog   // no need to upcast dog to Animal
-```
-
-*Dynamic downcasting* (`:?>`) might throw an `InvalidCastException` if the cast doesn't succeed at runtime.
-
-```fsharp
-let shouldBeADog = animal :?> Dog
-```
-
 <a name="InterfacesAndObjectExpressions"></a>Interfaces and Object Expressions
 ---------------------------------
 Declare `IVector` interface and implement it in `Vector'`.
@@ -724,6 +702,41 @@ let createCustomer name age =
     { new ICustomer with
         member __.Name = name
         member __.Age = age }
+```
+
+<a name="CastingAndConversions"></a>Casting and Conversions
+---------------
+
+```fsharp
+int 3.1415     // float to int = 3
+int "3"        // string to int = 3
+float 3        // int to float = 3.0
+float "3.1415" // string to float = 3.1415
+string 3       // int to string = "3"
+string 3.1415  // float to string = "3.1415"
+```
+
+*Upcasting* is denoted by `:>` operator.
+
+```fsharp
+let dog = Dog() 
+let animal = dog :> Animal
+```
+
+In many places type inference applies upcasting automatically:
+
+```fsharp
+let exerciseAnimal (animal: Animal) = () 
+
+let dog = Dog()
+
+exerciseAnimal dog   // no need to upcast dog to Animal
+```
+
+*Dynamic downcasting* (`:?>`) might throw an `InvalidCastException` if the cast doesn't succeed at runtime.
+
+```fsharp
+let shouldBeADog = animal :?> Dog
 ```
 
 <a name="ActivePatterns"></a>Active Patterns
