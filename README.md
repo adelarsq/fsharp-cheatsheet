@@ -424,6 +424,7 @@ let newInventory =              // Creates new Map
     inventory
     |> Map.add "Pineapples" 0.87
     |> Map.remove "Apples"
+```
 
 Safely access a key in a *Map* by using *TryFind*. It returns a wrapped option:
 
@@ -1326,7 +1327,7 @@ Returns the length of the collection.
 Returns a collection that contains no duplicate entries according to the generic hash and
 equality comparisons on the keys returned by the given key-generating function.
 
-```
+```fsharp
 let inputs = [-5 .. 10]
 
 // [-5; -4; -3; -2; -1; 0; 6; 7; 8; 9; 10]
