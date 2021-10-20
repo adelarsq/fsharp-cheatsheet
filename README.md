@@ -107,10 +107,10 @@ Other common examples are `F` or `f` for 32-bit floating-point numbers, `M` or `
 ```fsharp
 let s, f, d, bi = 4.14F, 4.14, 0.7833M, 9999I
 
-// [val s: float32 = 4.14f]
-// [val f: float = 4.14]
-// [val d: decimal = 0.7833M]
-// [val bi: System.Numerics.BigInteger = 9999]
+// val bi: System.Numerics.BigInteger = 9999
+// val d: decimal = 0.7833M
+// val f: float = 4.14
+// val s: float32 = 4.14f
 ```
 
 See [Literals](https://docs.microsoft.com/dotnet/fsharp/language-reference/literals) for complete reference.
