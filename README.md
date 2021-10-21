@@ -987,7 +987,7 @@ the windows are collections, not tuples.
 <a name="GroupingFunctions"></a>Grouping functions
 -------------------
 
-### groupBy (Array, List, Seq)    == GroupBy() in LINQ
+### groupBy (Array, List, Seq) == GroupBy() in LINQ
 
 *groupBy* works exactly as the LINQ version does. The output is a collection of simple tuples.
 The first element of the tuple is the key, and the second element is the collection of items
@@ -1089,12 +1089,11 @@ Splits the input collection into at most count chunks.
 ```
 
 ## Aggregate functions
--------------------
 
 Aggregate functions take a collection of items and merge them into a smaller
 collection of items (often just one).
 
-### sum, average, min, max      (Array, List, Seq)
+### sum, average, min, max (Array, List, Seq)
 
 All of these functions are specialized versions of a more generalized function *fold*.
 
@@ -1108,9 +1107,8 @@ let min = numbers |> List.min           // 1.0
 ```
 
 ##  Miscellaneous functions
--------------------
 
-### find (Array, List, Seq)    == Single() in LINQ
+### find (Array, List, Seq) == Single() in LINQ
 
 *find* - finds the first element that matches a given condition.
 
