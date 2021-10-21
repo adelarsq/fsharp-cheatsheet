@@ -24,6 +24,8 @@ Contents
 - [Useful functions](#UsefulFunctions)  
   - [Mapping functions](#MappingFunctions)  
   - [Grouping functions](#GroupingFunctions)  
+  - [Aggregate functions](#aggregate-functions)  
+  - [Miscellaneous functions](#miscellaneous-functions)  
   - [Array, List and Seq functions](#ArrayListAndSeqFunctions)  
 - [Acknowledgments](#Acknowledgments)  
 
