@@ -1,30 +1,31 @@
 # F# Cheatsheet 🔷
 
-An updated cheatsheet for F#
+An updated cheatsheet for [F#](https://fsharp.org/).
 
-This cheatsheet glances over some of the common syntax of [F#](https://fsharp.org/).
+This cheatsheet glances over some of the common syntax of F#.
 
 Contents
 --------
-[Comments](#Comments)  
-[Strings](#Strings)  
-[Basic Types and Literals](#BasicTypesAndLiterals)  
-[Loops](#Loops)  
-[Functions](#Functions)  
-[Pattern Matching](#PatternMatching)  
-[Collections](#Collections)  
-[Tuples and Records](#TuplesAndRecords)  
-[Discriminated Unions](#DiscriminatedUnions)  
-[Exceptions](#Exceptions)  
-[Classes and Inheritance](#ClassesAndInheritance)  
-[Interfaces and Object Expressions](#InterfacesAndObjectExpressions)  
-[Casting and Conversions](#CastingAndConversions)  
-[Active Patterns](#ActivePatterns)  
-[Compiler Directives](#CompilerDirectives)  
-[Mapping functions](#MappingFunctions)  
-[Grouping functions](#GroupingFunctions)  
-[Array, List and Seq useful functions](#ArrayListAndSeqUsefulFunctions)  
-[Acknowledgments](#Acknowledgments)  
+- [Comments](#Comments)  
+- [Strings](#Strings)  
+- [Basic Types and Literals](#BasicTypesAndLiterals)  
+- [Loops](#Loops)  
+- [Functions](#Functions)  
+- [Pattern Matching](#PatternMatching)  
+- [Collections](#Collections)  
+- [Tuples and Records](#TuplesAndRecords)  
+- [Discriminated Unions](#DiscriminatedUnions)  
+- [Exceptions](#Exceptions)  
+- [Classes and Inheritance](#ClassesAndInheritance)  
+- [Interfaces and Object Expressions](#InterfacesAndObjectExpressions)  
+- [Casting and Conversions](#CastingAndConversions)  
+- [Active Patterns](#ActivePatterns)  
+- [Compiler Directives](#CompilerDirectives)  
+- [Useful functions](#UsefulFunctions)  
+  - [Mapping functions](#MappingFunctions)  
+  - [Grouping functions](#GroupingFunctions)  
+  - [Array, List and Seq functions](#ArrayListAndSeqFunctions)  
+- [Acknowledgments](#Acknowledgments)  
 
 -------------------
 
@@ -818,6 +819,10 @@ let path = "../../../lib"
 #endif
 ```
 
+
+<a name="UsefulFunctions"></a>Useful functions
+-------------------
+
 <a name="MappingFunctions"></a>Mapping functions
 -------------------
 
@@ -1391,7 +1396,7 @@ let sortFunction (str1: string) (str2: string) =
 lst |> List.sortWith sortFunction
 ```
 
-<a name="ArrayListAndSeqUsefulFunctions"></a>Array, List and Seq useful functions
+<a name="ArrayListAndSeqFunctions"></a>Array, List and Seq functions
 -------------------
 
 ### allPairs (Array, List, Seq)
