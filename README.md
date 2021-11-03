@@ -9,6 +9,7 @@ Contents
 - [Comments](#Comments)  
 - [Strings](#Strings)  
 - [Basic Types and Literals](#BasicTypesAndLiterals)  
+- [Printing Things](#PrintingThings)  
 - [Loops](#Loops)  
 - [Functions](#Functions)  
 - [Pattern Matching](#PatternMatching)  
@@ -118,7 +119,7 @@ let s, f, d, bi = 4.14F, 4.14, 0.7833M, 9999I
 
 See [Literals](https://docs.microsoft.com/dotnet/fsharp/language-reference/literals) for complete reference.
 
-<a name="BasicTypesAndLiterals"></a>Printing Things
+<a name="PrintingThings"></a>Printing Things
 ------------------------
 
 Print things to console with `printfn`:
