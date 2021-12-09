@@ -8,7 +8,7 @@ Contents
 --------
 - [Comments](#Comments)  
 - [Strings](#Strings)  
-- [Basic Types and Literals](#BasicTypesAndLiterals)  
+- [Types and Literals](#TypesAndLiterals)  
 - [Printing Things](#PrintingThings)  
 - [Loops](#Loops)  
 - [Functions](#Functions)  
@@ -92,7 +92,7 @@ let str = $"A pair of braces: {{}}"
 printfn $"Name: %s{name}, Age: %d{age}" // typed
 ```
 
-<a name="BasicTypesAndLiterals"></a>Basic Types and Literals
+<a name="TypesAndLiterals"></a>Types and Literals
 ------------------------
 
 Most numeric types have associated suffixes, e.g., `uy` for unsigned 8-bit integers and `L` for signed 64-bit integer.
@@ -118,6 +118,18 @@ let s, f, d, bi = 4.14F, 4.14, 0.7833M, 9999I
 ```
 
 See [Literals](https://docs.microsoft.com/dotnet/fsharp/language-reference/literals) for complete reference.
+
+`and` keyword is used for definining mutually recursive types and functions:
+
+```fsharp
+type A = 
+  | Aaa of int 
+  | Aaaa of C
+and C = 
+  { Bbb : B }
+and B() = 
+  member x.Bbb = Aaa 10
+```
 
 <a name="PrintingThings"></a>Printing Things
 ------------------------
