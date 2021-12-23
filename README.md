@@ -131,6 +131,17 @@ and B() =
   member x.Bbb = Aaa 10
 ```
 
+Floating point and signed integer values in F# can have associated [units of measure](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/units-of-measure), which are typically used to indicate length, volume, mass, and so on:
+
+```fsharp
+[<Measure>] type kg
+let m1 = 10.0<kg>
+let m2 = m1 * 2.0 // type inference for result 
+let add30kg m =   // type inference for input and output
+    m + 30.0<kg>
+add30 2.0<kg>     // val it: float<kg> = 32.0
+```
+
 <a name="PrintingThings"></a>Printing Things
 ------------------------
 
