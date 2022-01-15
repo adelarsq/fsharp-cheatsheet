@@ -849,7 +849,7 @@ let path = "../../../lib"
 <a name="UsefulFunctions"></a>Useful functions
 -------------------
 
-#### [id](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-operators.html#id)
+#### [identity function (id)](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-core-operators.html#id)
 
 It's useful for cases where you need a lambda like `fun x -> x`:
 
