@@ -359,7 +359,7 @@ let first2 = array1[0]    // F# 6
       
 ### Sequences == IEnumerable
 
-A *sequence* is a logical series of elements of the same type. Individual sequence elements are computed only as required, so a sequence can provide better performance than a list in situations in which not all the elements are used.
+[*Sequences*](https://docs.microsoft.com/dotnet/fsharp/language-reference/sequences) are logical series of elements of the same type. Individual sequence elements are computed only as required, so a sequence can provide better performance than a list in situations in which not all the elements are used.
 
 ```fsharp
 // Sequences can use yield and contain subsequences
