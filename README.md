@@ -610,7 +610,7 @@ let rec depth input =
     | Leaf -> 0
 ```
 
-F# Core has a few built-in discriminated unions for error handling, e.g., [Option](http://msdn.microsoft.com/en-us/library/dd233245.aspx) and [Choice](http://msdn.microsoft.com/en-us/library/ee353439.aspx).
+F# Core has a few built-in discriminated unions for error handling, e.g., [Option](http://msdn.microsoft.com/en-us/library/dd233245.aspx) and [Result](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results).
 
 ```fsharp
 let optionPatternMatch input =
