@@ -612,11 +612,28 @@ let rec depth input =
 
 F# Core has a few built-in discriminated unions for error handling, e.g., [Option](http://msdn.microsoft.com/en-us/library/dd233245.aspx) and [Result](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results).
 
+Using [Option](http://msdn.microsoft.com/en-us/library/dd233245.aspx):
+
 ```fsharp
 let optionPatternMatch input =
     match input with
     | Some i -> printfn "input is an int=%d" i
     | None -> printfn "input is missing"
+
+optionPatternMatch (Some 1)
+optionPatternMatch None
+```
+
+Using [Result](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/results):
+
+```fsharp
+let resultPatternMatch input =
+    match input with
+    | Ok i -> printfn "Success with code %d" i
+    | Error e -> printfn "Error with code %d" e
+
+resultPatternMatch (Ok 0)
+resultPatternMatch (Error 1)
 ```
 
 Single-case discriminated unions are often used to create type-safe abstractions with pattern matching support:
