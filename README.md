@@ -1543,15 +1543,12 @@ only the reference is copied, not the underlying object.
 ```fsharp
 let firstArray : StringBuilder array = Array.init 3 (fun index -> new StringBuilder(""))
 let secondArray = Array.copy firstArray
-// Two arrays: [|; ; |]
 
 firstArray.[0] <- new StringBuilder("Test1")
-// firstArray: [|Test1; ; |]
-// secondArray: [|; ; |]
+firstArray[0] <- new StringBuilder("Test1") // F# 6
 
 firstArray.[1].Insert(0, "Test2") |> ignore
-// firstArray: [|Test1; Test2; |]
-// secondArray: [|; Test2; |]
+firstArray[1].Insert(0, "Test2") |> ignore // F# 6
 ```
 
 <a name="Acknowledgments"></a>Acknowledgments
