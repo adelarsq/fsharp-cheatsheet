@@ -445,7 +445,9 @@ let inventory =
     Map ["Apples", 0.33; "Oranges", 0.23; "Bananas", 0.45]
 
 let apples = inventory.["Apples"]
+let apples = inventory["Apples"] // F# 6
 let pineapples = inventory.["Pineapples"]   // KeyNotFoundException
+let pineapples = inventory["Pineapples"]    // KeyNotFoundException on F# too
 
 let newInventory =              // Creates new Map
     inventory
