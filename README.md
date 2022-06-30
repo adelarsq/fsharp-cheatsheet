@@ -1561,4 +1561,5 @@ Thanks goes to these people/projects:
 - [dungpa/fsharp-cheatsheet](https://github.com/dungpa/fsharp-cheatsheet)
 - [artag/fsharp-cheatsheet](https://github.com/artag/fsharp-cheatsheet)
 - [thriuin/fsharp-cheatsheet](https://github.com/thriuin/fsharp-cheatsheet)
+- [Succinct FSharp](https://dasdocs.com/fsharp/1-succinct-fsharp.html)
 
