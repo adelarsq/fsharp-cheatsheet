@@ -1,8 +1,5 @@
 # F# vs C# Cheat Sheet
 
-- [Original source](https://docs.microsoft.com/en-gb/archive/blogs/timng/f-quick-guides-object-oriented-programming)
-- [Referenced from FSharp Cheatsheet](http://dungpa.github.io/fsharp-cheatsheet/)
-
 ## Classes with properties and default constructor
 
 <table><tr><td valign="top">
@@ -1064,3 +1061,9 @@ v.y = 10;
 ```
 
 </td></tr></table>
+
+## Links
+    
+- [Original source](https://docs.microsoft.com/en-gb/archive/blogs/timng/f-quick-guides-object-oriented-programming)
+- [Converting between F# and C# types](https://devonburriss.me/converting-fsharp-csharp/)    
+    
