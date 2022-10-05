@@ -591,7 +591,7 @@ and odd x =
 
 `rec` also can be used to define strings like this:
 
-```
+```fsharp
 let rec name = nameof name
 ```
 
