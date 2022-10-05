@@ -566,7 +566,7 @@ let isPaul person =
     | _ -> false
 ```
 
-<a name="Recursive Functions"></a>Recursive Functions
+<a name="Recursive Functions"></a>Recursion
 ----------------
 
 The `rec` keyword is used together with the `let` keyword to define a recursive function:
@@ -587,6 +587,12 @@ let rec even x =
 and odd x =
    if x = 0 then false
    else even (x - 1)
+```
+
+`rec` also can be used to define strings like this:
+
+```
+let rec name = nameof name
 ```
 
 <a name="DiscriminatedUnions"></a>Discriminated Unions
