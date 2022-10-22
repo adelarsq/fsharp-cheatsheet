@@ -11,10 +11,10 @@ Contents
 - [Types and Literals](#TypesAndLiterals)  
 - [Printing Things](#PrintingThings)  
 - [Loops](#Loops)  
+- [Tuples](#Tuples)  
 - [Functions](#Functions)  
 - [Pattern Matching](#PatternMatching)  
 - [Collections](#Collections)  
-- [Tuples](#Tuples)  
 - [Records](#Records)  
 - [Discriminated Unions](#DiscriminatedUnions)  
 - [Exceptions](#Exceptions)  
@@ -221,6 +221,33 @@ for _ in list1 do
 let mutable mutVal = 0
 while mutVal < 10 do        // while (not) test-expression do
     mutVal <- mutVal + 1
+```
+
+<a name="Tuples"></a>Tuples
+------------------
+
+A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
+
+```fsharp
+// Tuple construction
+let x = (1, "Hello")
+
+// Triple
+let y = ("one", "two", "three") 
+
+// Tuple deconstruction / pattern
+let (a', b') = x
+```
+
+The first and second elements of a tuple can be obtained using `fst`, `snd`, or pattern matching:
+
+```fsharp
+let c' = fst (1, 2)
+let d' = snd (1, 2)
+  
+let print' tuple =
+    match tuple with
+    | (a, b) -> printfn "Pair %A %A" a b
 ```
 
 <a name="Functions"></a>Functions
@@ -511,33 +538,6 @@ Lists and arrays have comprehensive functions for manipulation.
   - `List.iter` iterates through a list and produces side effects
 
 These and other functions are covered below. All these operations are also available for sequences. 
-
-<a name="Tuples"></a>Tuples
-------------------
-
-A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
-
-```fsharp
-// Tuple construction
-let x = (1, "Hello")
-
-// Triple
-let y = ("one", "two", "three") 
-
-// Tuple deconstruction / pattern
-let (a', b') = x
-```
-
-The first and second elements of a tuple can be obtained using `fst`, `snd`, or pattern matching:
-
-```fsharp
-let c' = fst (1, 2)
-let d' = snd (1, 2)
-  
-let print' tuple =
-    match tuple with
-    | (a, b) -> printfn "Pair %A %A" a b
-```
 
 <a name="Records"></a>Records
 ------------------
