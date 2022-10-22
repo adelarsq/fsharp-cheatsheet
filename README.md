@@ -14,7 +14,8 @@ Contents
 - [Functions](#Functions)  
 - [Pattern Matching](#PatternMatching)  
 - [Collections](#Collections)  
-- [Tuples and Records](#TuplesAndRecords)  
+- [Tuples](#Tuples)  
+- [Records](#Records)  
 - [Discriminated Unions](#DiscriminatedUnions)  
 - [Exceptions](#Exceptions)  
 - [Classes and Inheritance](#ClassesAndInheritance)  
@@ -511,8 +512,9 @@ Lists and arrays have comprehensive functions for manipulation.
 
 These and other functions are covered below. All these operations are also available for sequences. 
 
-<a name="TuplesAndRecords"></a>Tuples and Records
+<a name="Tuples"></a>Tuples
 ------------------
+
 A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
 
 ```fsharp
@@ -536,6 +538,9 @@ let print' tuple =
     match tuple with
     | (a, b) -> printfn "Pair %A %A" a b
 ```
+
+<a name="Records"></a>Records
+------------------
 
 *Records* represent simple aggregates of named values, optionally with members:
 
