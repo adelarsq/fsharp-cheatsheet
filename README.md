@@ -229,19 +229,24 @@ while mutVal < 10 do        // while (not) test-expression do
 A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
 
 ```fsharp
-// Tuple construction
+// 0-tuple also called "unit" type
+// functions that return void in C# will return the unit type in F#
+let nothing = ()
+
+// 1-tuple is not very useful since it could easily be replaced with a single value
+let one = (1) // same as `let one =  1`
+
+// 2-tuples
 let x = (1, "Hello")
 
-// Triple
+// 3-tuples
 let y = ("one", "two", "three") 
 
-// Tuple deconstruction / pattern
+// Tuple deconstruction
 let (a', b') = x
-```
+let (c', d', e') = y
 
-The first and second elements of a tuple can be obtained using `fst`, `snd`, or pattern matching:
-
-```fsharp
+// The first and second elements of a tuple can be obtained using `fst`, `snd`, or pattern matching:
 let c' = fst (1, 2)
 let d' = snd (1, 2)
   
