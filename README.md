@@ -11,7 +11,7 @@ Contents
 - [Types and Literals](#TypesAndLiterals)  
 - [Printing Things](#PrintingThings)  
 - [Loops](#Loops)  
-- [Tuples](#Tuples)  
+- [Values](#Values)  
 - [Functions](#Functions)  
 - [Pattern Matching](#PatternMatching)  
 - [Collections](#Collections)  
@@ -223,19 +223,24 @@ while mutVal < 10 do        // while (not) test-expression do
     mutVal <- mutVal + 1
 ```
 
-<a name="Tuples"></a>Tuples
+<a name="Values"></a>Values
 ------------------
 
-A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
+Values have different names based on length, called unit, single value and tuples.
 
 ```fsharp
-// 0-tuple also called "unit" type
-// functions that return void in C# will return the unit type in F#
+// unit (no value)
 let nothing = ()
 
-// 1-tuple is not very useful since it could easily be replaced with a single value
+// single value
 let one = (1) // same as `let one =  1`
+```
 
+Functions that return void in C# will return the unit type in F#.
+
+A *tuple* is a grouping of unnamed but ordered values, with lenght equal or bigger than 2 and possibly of different types:
+
+```fsharp
 // 2-tuples
 let x = (1, "Hello")
 
