@@ -233,7 +233,7 @@ Values have different names based on length, called unit, single value and tuple
 let nothing = ()
 
 // single value
-let one = (1) // same as `let one =  1`
+let single = 1 // same as `let single =  (1)`
 ```
 
 Functions that return void in C# will return the unit type in F#.
